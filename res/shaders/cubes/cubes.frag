@@ -34,9 +34,9 @@ void main()
 	which is done in a preprocess stage to keep the shader source looking sane and my shader devs happy. Again check stdout if you have doubts about it! */
 	vec4 albedo = texture(virtualTextures[textureId], texCoord);
 	
-	/*if(albedo.a == 0.0) {
+	if(albedo.a == 0.0) {
 		discard;
-	}*/
+	}
 
 	colorOut = vec4(albedo.rgb * (NdL * 0.8 + 0.2), 1.0);
 	normalOut = vec4(normal * 0.5 + vec3(0.5), 1.0);
