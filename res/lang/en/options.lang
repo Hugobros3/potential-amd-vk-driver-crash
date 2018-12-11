@@ -1,0 +1,51 @@
+options.title Options Menu
+
+Rendering Rendering
+
+client.rendering.viewDistance View distance
+client.rendering.realtimeReflections Local reflections
+client.rendering.dynamicCubemaps Global reflections
+client.rendering.shadows Enable shadows
+client.rendering.shadowsResolution Shadows Quality
+client.rendering.hqTerrain Distant terrain quality
+quality.low Low
+quality.high High
+client.rendering.bloom Bloom effect
+client.rendering.globalIllumination Global Illumination
+
+Video Video
+
+client.video.fov Field of view
+client.video.fullScreen Fullscreen
+client.video.fullScreenResolution Fullscreen resolution
+client.video.framerateCap Frame limiter
+
+client.game.log-policy Send log reports
+client.game.workersThreads Worker Threads
+client.game.language Language
+
+Controls Controls
+
+client.input.mouseSensitivity Mouse sensitivity
+client.input.client.bind.use Use
+client.input.bind.back Back
+client.input.bind.run Run
+client.input.bind.inventory Inventory
+client.input.bind.enter Enter
+client.input.bind.jump Jump
+client.input.bind.forward Forward
+client.input.bind.right Right
+client.input.bind.left Left
+client.input.bind.exit Pause
+client.input.bind.chat Open chat
+client.input.bind.crouch Crouch
+client.input.bind.use Use
+
+Sound Sound
+
+Debug Debug
+
+client.debug.frametimeGraph Performance graph
+client.debug.showDebugInfo Show debug info
+client.debug.debugGBuffers Debug render buffers
+client.debug.physicsVisualization Physics debug
