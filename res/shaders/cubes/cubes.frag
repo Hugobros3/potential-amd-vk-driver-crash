@@ -7,7 +7,9 @@
 
 layout(set=0, location=0) uniform sampler2D virtualTextures[1024];
 
-// Don't worry about the lack of layout annotations, I preprocess the shader with spirv-cross
+// About the lack of layout annotations, I preprocess the shader with spirv-cross
+// The outputed glsl code is then fed to an embedded version of glslValidator and also printed to stdout
+// I also provide compiled isa dumps for my GPU (Ellesmere), both with 
 in vec4 color;
 in vec3 normal;
 in vec2 texCoord;
@@ -24,30 +26,18 @@ void main()
 	vec3 sunPos = vec3(1.0, 1.5, 0.3);
 	sunPos = normalize(sunPos);
 
-	// Compute some crappy-ass lighting
-	// Commenting this out will also solve the crash on it's own, which is very strange
-	// considering I don't use the computed value! 
+	// Move this after the texture fetch and no crash !
 	float NdL = clamp(dot(sunPos, normal.xyz), 0.0, 1.0);
-
-	// The magic virtual texturing stuff 
-	// ( requires EXT_descriptor_indexing.shaderSampledImageArrayNonUniformIndexing )
+	
+	/* The magic virtual texturing stuff 
+	requires EXT_descriptor_indexing.shaderSampledImageArrayNonUniformIndexing, and wrapping the array index in nonUniformEXT()
+	which is done in a preprocess stage to keep the shader source looking sane and my shader devs happy. Again check stdout if you have doubts about it! */
 	vec4 albedo = texture(virtualTextures[textureId], texCoord);
 	
-	// Unused code ( can reproduce the crash without it )
-	//vec3 litSurface = albedo.rgb * NdL * 0.5 + albedo.rgb * 0.5;
-	//vec3 fog = vec3(0.0, 0.5, 1.0);
-
-	// If you comment-out this statement, you can keep the dot product below and it works fine
-	if(albedo.a == 0.0) {
+	/*if(albedo.a == 0.0) {
 		discard;
-	}
+	}*/
 
-	// If you comment-out this statement and output a vec4(1), you can keep the discard case above and it works fine
-	colorOut = vec4(vec3(dot(sunPos, normal.xyz)), 1.0);
-	//colorOut = vec4(1.0);
-
-	// disabled for minimal test case
-	//colorOut = vec4(litSurface, albedo.a);
-	//colorOut = vec4(mix(fog, litSurface, fogStrength), albedo.a);
+	colorOut = vec4(albedo.rgb * (NdL * 0.8 + 0.2), 1.0);
 	normalOut = vec4(normal * 0.5 + vec3(0.5), 1.0);
 }
