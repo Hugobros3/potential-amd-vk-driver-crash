@@ -1,0 +1,5 @@
+launch via rip-amd-driver.bat or .sh
+use default login (kektest/kektest)
+click singleplayer
+click namalsk-cs20
+you should get a driver malfunction and a freeze on a blue screen
